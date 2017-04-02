@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -51,15 +48,17 @@ public class Hours {
             //The array is already sorted by time ascending. For each second between the start date and the end date. loop through
             int rightPointer = 1;
             LocalDateTime oneHourFromNow;
+
             for (int i = 0; i < dates.size(); i++) {
 
                 oneHourFromNow = dates.get(i).plusHours(1);
 
-                while(dates.get(i+rightPointer).isBefore(oneHourFromNow)){
+
+                while(dates.get(rightPointer).isBefore(oneHourFromNow) && rightPointer < (dates.size() - 1)){
                     rightPointer += 1;
                 }
 
-                HoursNode newNode = new HoursNode(dates.get(1), (rightPointer - i) + 1);
+                HoursNode newNode = new HoursNode(dates.get(i), (rightPointer - i) + 1);
 
                 if(datesQueue.size() < topX){
                     datesQueue.add(newNode);
@@ -71,6 +70,28 @@ public class Hours {
                 }
 
             }
+
+            StringBuilder fileStringBuilder = new StringBuilder();
+
+            while (datesQueue.size() > 0) {
+
+                HoursNode smallest = datesQueue.remove();
+                StringBuilder lineStringBuilder = new StringBuilder();
+
+                if (datesQueue.size() > 0) {
+                    lineStringBuilder.append("\n");
+                }
+
+                lineStringBuilder.append(smallest.getTime());
+                lineStringBuilder.append(" -400,");
+                lineStringBuilder.append(smallest.getNumEvents());
+                fileStringBuilder.insert(0, lineStringBuilder);
+            }
+
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter("log_output/hours.txt"));
+            writer.append(fileStringBuilder);
+            writer.close();
 
         } catch(FileNotFoundException e){
             e.printStackTrace();
