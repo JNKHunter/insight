@@ -18,7 +18,20 @@ public class Hours {
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileString))) {
             List<LocalDateTime> dates = new ArrayList<>();
-            Queue<LocalDateTime> datesQueue = new PriorityQueue<>();
+            Queue<HoursNode> datesQueue = new PriorityQueue<>(new Comparator<HoursNode>() {
+                @Override
+                public int compare(HoursNode hoursNode, HoursNode t1) {
+                    if(hoursNode.getNumEvents() > t1.getNumEvents()) {
+                        return 1;
+                    }
+
+                    if(hoursNode.getNumEvents() < t1.getNumEvents()) {
+                        return -1;
+                    }
+
+                    return 0;
+                }
+            });
 
             String line;
             String logPattern = "[\\w.]+ - - \\[([/\\w\\S\\s]+) -[0-9]+] \"\\w+ [/\\w\\S]+[\\w\\S\\s]*\" [0-9]+ [0-9\\-]+";
@@ -46,18 +59,19 @@ public class Hours {
                     rightPointer += 1;
                 }
 
+                HoursNode newNode = new HoursNode(dates.get(1), (rightPointer - i) + 1);
 
+                if(datesQueue.size() < topX){
+                    datesQueue.add(newNode);
+                }else{
+                    if(datesQueue.peek().getNumEvents() < newNode.getNumEvents()) {
+                        datesQueue.remove();
+                        datesQueue.add(newNode);
+                    }
+                }
 
             }
 
-            //Find the start month
-            //Find the end month
-            //Check every second starting from the first event
-
-            /*Remove root of PQ, then peek at new root. if new root is within the hour, increment counter. Remove new root,
-        and peek at next new root. Repeat process. once new root is not within the hour of original root, we've got our
-        count for that hour. Push items back on the queue.
-        */
         } catch(FileNotFoundException e){
             e.printStackTrace();
         } catch(IOException e){
