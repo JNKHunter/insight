@@ -48,9 +48,11 @@ public class Hours {
             //The array is already sorted by time ascending. For each second between the start date and the end date. loop through
             int rightPointer = 1;
             LocalDateTime oneHourFromNow;
-
+            //Used to skip to the next second to keep the data a little more useful and insightful
+            int previousSecond = 0;
             for (int i = 0; i < dates.size(); i++) {
 
+                if(previousSecond == dates.get(i).getSecond()) continue;
                 oneHourFromNow = dates.get(i).plusHours(1);
 
 
@@ -69,6 +71,7 @@ public class Hours {
                     }
                 }
 
+                previousSecond = dates.get(i).getSecond();
             }
 
             StringBuilder fileStringBuilder = new StringBuilder();
@@ -82,7 +85,7 @@ public class Hours {
                     lineStringBuilder.append("\n");
                 }
 
-                lineStringBuilder.append(smallest.getTime());
+                lineStringBuilder.append(smallest.getTime().format(DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ss")));
                 lineStringBuilder.append(" -400,");
                 lineStringBuilder.append(smallest.getNumEvents());
                 fileStringBuilder.insert(0, lineStringBuilder);
