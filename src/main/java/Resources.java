@@ -42,11 +42,12 @@ public class Resources {
 
             String logPattern = "[\\w.]+ - - \\[[/\\w\\S\\s]+] \"\\w+ ([/\\w\\S]+)[\\w\\S\\s]*\" [0-9]+ ([0-9\\-]+)";
             Pattern p = Pattern.compile(logPattern);
+            Matcher matcher;
 
             long bytes = 0;
             while ((line = br.readLine()) != null) {
 
-                Matcher matcher = p.matcher(line);
+                matcher = p.matcher(line);
 
                 if (matcher.find()){
 
