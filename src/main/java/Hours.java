@@ -86,7 +86,7 @@ public class Hours {
             }
 
             lineStringBuilder.append(smallest.getTime().format(DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ss")));
-            lineStringBuilder.append(" -400,");
+            lineStringBuilder.append(" -0400,");
             lineStringBuilder.append(smallest.getNumEvents());
             fileStringBuilder.insert(0, lineStringBuilder);
         }
