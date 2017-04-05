@@ -2,9 +2,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by jhunter on 4/3/17.
- */
 public class BlockedNode {
     public static int MAX_ATTEMPTS = 3;
     public static int ATTEMPTS_SECONDS_WINDOW = 20;
@@ -13,8 +10,6 @@ public class BlockedNode {
     private String host;
     private List<String> blockedRequests;
     private List<LocalDateTime> loginFails;
-
-
 
     public BlockedNode(String host, LocalDateTime loginFailTime) {
         this.host = host;

@@ -6,77 +6,73 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by jhunter on 4/3/17.
- */
 public class Blocked {
 
-    private static String FAILED_LOGIN_CODE = "401";
-    private static String SUCCESS_LOGIN_CODE = "401";
-    private static String LOGIN_PATH = "/login";
+    private static final String FAILED_LOGIN_CODE = "401";
+    private static final String SUCCESS_LOGIN_CODE = "401";
+    private static final String LOGIN_PATH = "/login";
+    private String logPattern;
+    private Pattern pattern;
+    private Map<String, BlockedNode> failedLogins;
+    private DateTimeFormatter formatter;
+    private Matcher matcher;
 
-    public Blocked(String fileString) {
+    public Blocked() {
+        logPattern = "([\\w.]+) - - \\[([/\\w\\S\\s]+) -[0-9]+] \"\\w+ ([/\\w\\S]+)[\\w\\S\\s]*\" ([0-9]+) [0-9\\-]+";
+        pattern = Pattern.compile(logPattern);
+        failedLogins = new HashMap<>();
+        formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ss");
+    }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(fileString))) {
+    public void outputResults(String outputFile) throws IOException {
+        StringBuilder fileStringBuilder = new StringBuilder();
 
-            String logPattern = "([\\w.]+) - - \\[([/\\w\\S\\s]+) -[0-9]+] \"\\w+ ([/\\w\\S]+)[\\w\\S\\s]*\" ([0-9]+) [0-9\\-]+";
-            Pattern p = Pattern.compile(logPattern);
-            Matcher matcher;
-            String line;
-            Map<String, BlockedNode> failedLogins = new HashMap<>();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ss");
+        failedLogins.forEach((k,v) -> {
 
-            while ((line = br.readLine()) != null) {
-                matcher = p.matcher(line);
-
-                if (matcher.find()) {
-
-                    if (failedLogins.containsKey(matcher.group(1))) {
-
-                        if (matcher.group(4).equals(FAILED_LOGIN_CODE) && matcher.group(3).equals(LOGIN_PATH)) {
-                            failedLogins.get(matcher.group(1)).addPossibleBlockedRequest(matcher.group(0),
-                                    LocalDateTime.parse(matcher.group(2), formatter));
-                            failedLogins.get(matcher.group(1))
-                                    .logFailedAttempt(LocalDateTime.parse(matcher.group(2), formatter));
-
-                        } else if (matcher.group(4).equals(SUCCESS_LOGIN_CODE) && matcher.group(3).equals(LOGIN_PATH)) {
-                            if(failedLogins.get(matcher.group(1)).addPossibleBlockedRequest(matcher.group(0),
-                                    LocalDateTime.parse(matcher.group(2), formatter))){
-
-                            } else {
-                                failedLogins.remove(matcher.group(1));
-                            }
-
-                        } else {
-                            failedLogins.get(matcher.group(1)).addPossibleBlockedRequest(matcher.group(0),
-                                    LocalDateTime.parse(matcher.group(2), formatter));
-                        }
-                    } else if (matcher.group(4).equals(FAILED_LOGIN_CODE) && matcher.group(3).equals(LOGIN_PATH)) {
-                        failedLogins.put(matcher.group(1), new BlockedNode(matcher.group(1),
-                                LocalDateTime.parse(matcher.group(2), formatter)));
-                    }
-                }
+            if(v.getBlockedRequests().size() > 0){
+                StringBuilder lineStringBuilder = new StringBuilder();
+                v.getBlockedRequests().forEach((request) -> {
+                    lineStringBuilder.append(request);
+                    lineStringBuilder.append("\n");
+                });
+                fileStringBuilder.insert(0, lineStringBuilder);
             }
+        });
 
-            StringBuilder fileStringBuilder = new StringBuilder();
+        BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+        writer.append(fileStringBuilder);
+        writer.close();
+    }
 
-            failedLogins.forEach((k,v) -> {
+    public void processNextLine(String line) {
+        matcher = pattern.matcher(line);
 
-                if(v.getBlockedRequests().size() > 0){
-                    StringBuilder lineStringBuilder = new StringBuilder();
-                    v.getBlockedRequests().forEach((request) -> {
-                        lineStringBuilder.append(request);
-                        lineStringBuilder.append("\n");
-                    });
-                    fileStringBuilder.insert(0, lineStringBuilder);
+        if (matcher.find()) {
+
+            if (failedLogins.containsKey(matcher.group(1))) {
+
+                if (matcher.group(4).equals(FAILED_LOGIN_CODE) && matcher.group(3).equals(LOGIN_PATH)) {
+                    failedLogins.get(matcher.group(1)).addPossibleBlockedRequest(matcher.group(0),
+                            LocalDateTime.parse(matcher.group(2), formatter));
+                    failedLogins.get(matcher.group(1))
+                            .logFailedAttempt(LocalDateTime.parse(matcher.group(2), formatter));
+
+                } else if (matcher.group(4).equals(SUCCESS_LOGIN_CODE) && matcher.group(3).equals(LOGIN_PATH)) {
+                    if(failedLogins.get(matcher.group(1)).addPossibleBlockedRequest(matcher.group(0),
+                            LocalDateTime.parse(matcher.group(2), formatter))){
+
+                    } else {
+                        failedLogins.remove(matcher.group(1));
+                    }
+
+                } else {
+                    failedLogins.get(matcher.group(1)).addPossibleBlockedRequest(matcher.group(0),
+                            LocalDateTime.parse(matcher.group(2), formatter));
                 }
-            });
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter("log_output/blocked.txt"));
-            writer.append(fileStringBuilder);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            } else if (matcher.group(4).equals(FAILED_LOGIN_CODE) && matcher.group(3).equals(LOGIN_PATH)) {
+                failedLogins.put(matcher.group(1), new BlockedNode(matcher.group(1),
+                        LocalDateTime.parse(matcher.group(2), formatter)));
+            }
         }
     }
 }

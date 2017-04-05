@@ -14,8 +14,7 @@ public class Client {
         Hosts hosts = new Hosts(10);
         Resources resources = new Resources(10);
         Hours hours = new Hours(10);
-        Blocked blocked = new Blocked("insight_testsuite/tests/test_features/log_input/log.txt");
-
+        Blocked blocked = new Blocked();
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileString))) {
             String line;
@@ -24,6 +23,7 @@ public class Client {
                 hosts.processNextLine(line);
                 resources.processNextLine(line);
                 hours.processNextLine(line);
+                blocked.processNextLine(line);
             }
 
         } catch (IOException e) {
@@ -33,5 +33,6 @@ public class Client {
         hosts.outputResults("log_output/hosts.txt");
         resources.outputResults("log_output/resources.txt");
         hours.outputResults("log_output/hours.txt");
+        blocked.outputResults("log_output/blocked.txt");
     }
 }
