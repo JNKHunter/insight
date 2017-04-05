@@ -49,6 +49,9 @@ public class Hosts {
         } else {
             hostsMap.put(hostname, new HostNode(hostname, 1));
         }
+    }
+
+    public void outputResults(String outputFile) throws IOException {
 
         hostsMap.forEach((k, v) -> {
             if (hostsQueue.size() < topX) {
@@ -60,9 +63,6 @@ public class Hosts {
                 }
             }
         });
-    }
-
-    public void outputResults(String outputFile) throws IOException {
 
         StringBuilder fileStringBuilder = new StringBuilder();
 
