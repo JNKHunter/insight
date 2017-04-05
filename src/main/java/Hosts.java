@@ -88,6 +88,6 @@ public class Hosts {
     }
 
     public static void main(String[] args) {
-        Hosts hosts = new Hosts("log_input/log.txt", 10);
+        Hosts hosts = new Hosts("insight_testsuite/tests/test_features/log_input/log.txt", 10);
     }
 }

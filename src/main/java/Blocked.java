@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -60,6 +57,24 @@ public class Blocked {
                     }
                 }
             }
+
+            StringBuilder fileStringBuilder = new StringBuilder();
+
+            failedLogins.forEach((k,v) -> {
+
+                if(v.getBlockedRequests().size() > 0){
+                    StringBuilder lineStringBuilder = new StringBuilder();
+                    v.getBlockedRequests().forEach((request) -> {
+                        lineStringBuilder.append(request);
+                        lineStringBuilder.append("\n");
+                    });
+                    fileStringBuilder.insert(0, lineStringBuilder);
+                }
+            });
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter("log_output/blocked.txt"));
+            writer.append(fileStringBuilder);
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

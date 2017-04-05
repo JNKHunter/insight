@@ -12,7 +12,7 @@ public class Hours {
 
     public Hours(String fileString, int topX) {
         //Loop through line, add each request to a max priority queue
-
+        // TODO Tweak to run on the second
         try (BufferedReader br = new BufferedReader(new FileReader(fileString))) {
             List<LocalDateTime> dates = new ArrayList<>();
             Queue<HoursNode> datesQueue = new PriorityQueue<>(new Comparator<HoursNode>() {
@@ -49,10 +49,8 @@ public class Hours {
             int rightPointer = 1;
             LocalDateTime oneHourFromNow;
             //Used to skip to the next second to keep the data a little more useful and insightful
-            int previousSecond = 0;
             for (int i = 0; i < dates.size(); i++) {
 
-                if(previousSecond == dates.get(i).getSecond()) continue;
                 oneHourFromNow = dates.get(i).plusHours(1);
 
 
@@ -70,8 +68,6 @@ public class Hours {
                         datesQueue.add(newNode);
                     }
                 }
-
-                previousSecond = dates.get(i).getSecond();
             }
 
             StringBuilder fileStringBuilder = new StringBuilder();
@@ -104,6 +100,6 @@ public class Hours {
     }
 
     public static void main(String[] args) {
-        Hours hours = new Hours("log_input/log.txt", 10);
+        Hours hours = new Hours("insight_testsuite/tests/test_features/log_input/log.txt", 10);
     }
 }

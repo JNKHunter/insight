@@ -42,6 +42,10 @@ public class BlockedNode {
         return false;
     }
 
+    public List<String> getBlockedRequests() {
+        return blockedRequests;
+    }
+
     public void logFailedAttempt(LocalDateTime failedLoginTime) {
         loginFails.add(failedLoginTime);
     }

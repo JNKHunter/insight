@@ -105,6 +105,6 @@ public class Resources {
     }
 
     public static void main(String[] args) {
-        Resources resources = new Resources("log_input/log.txt", 10);
+        Resources resources = new Resources("insight_testsuite/tests/test_features/log_input/log.txt", 10);
     }
 }
