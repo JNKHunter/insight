@@ -14,7 +14,8 @@ we remove the root of the pq, and add the new host and value to the pq.
 ##### :fire: Bonus top hosts feature!
 Return any number of top hosts (not only the top 10). Because add() in a pq is an O(log(n)) operation, and peek()/remove() is
 an 0(log(1)) operation we have the ability to scale our solution to return the top million or even billion resources,
-with only a log(n) negative effect on time performance.
+with only a log(n) negative effect on time performance. In the constructor, just pass the number of top X hosts you'd
+like returned.
 
 ### Resources.java
 * Similar to Hosts.java, we parse out each resource from log entries and store them in a hashmap.
@@ -26,31 +27,5 @@ we remove the root of the pq, and add the new resource and value to the pq.
 ##### :fire: Bonus top resources feature!
 Just like in Hosts.java, return any number of top resources (not only the top 10). Because add() in a pq is an O(log(n))
 operation, and peek()/remove() is an 0(log(1)) operation we have the ability to scale our solution to return the top
-million or even billion resources, with only a log(n) negative effect on time performance.
-
-
-First we parse in N lines contained in the file one line at a time, collecting hosts/ip names into a hashmap.
-
-We then take a pass through the hashmap, storing the top M hosts in a priority queue.
- 
-add() in a pq is an O(log(n)) operation, and peek()/remove() is an 0(log(1)) operation. This will give us the ability
-to scale our solution to the top million or even billion requesting hosts, with only a log(n)
-negative effect time performance.
- 
- 
-
-Created by jhunter on 4/1/17.
-First we parse in N lines contained in the file one line at a time, collecting resource paths and accumulated bytes
-into a hashmap.
-
-We then take a pass through the hashmap, storing the top M resources in a priority queue.
-
-By peeking at the root of the pq, we know the minimum of the top 10 requests so far. If we find a larger resource
-value than the current minimum of the top 10 resoursces, we remove the root of the pq, and add the new
-resource node and value to the pq.
-
-
- 
- 
-Extra features, pass in the number of top X items you'd like to see into the constructor of Hosts, Resources, or HOurs.
-You will get that many results back with only a log(n) increase in time execution!  
+million or even billion resources, with only a log(n) negative effect on time performance. In the constructor, just
+pass the number of top X resources you'd like returned.
