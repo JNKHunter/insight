@@ -18,11 +18,22 @@ import java.util.*;
 */
 public class Hosts {
 
+    Map<String, HostNode> hostsMap;
+    Queue<HostNode> hostsQueue;
+
+    public void processNextLine(String line) {
+
+    }
+
+    public void outputResults(String outputFile) {
+
+    }
+
     public Hosts(String fileString, int topX) {
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileString))) {
-            Map<String, HostNode> hostsMap = new HashMap<>();
-            Queue<HostNode> hostsQueue = new PriorityQueue<>(new Comparator<HostNode>() {
+            hostsMap = new HashMap<>();
+            hostsQueue = new PriorityQueue<>(new Comparator<HostNode>() {
                 @Override
                 public int compare(HostNode hostNode, HostNode t1) {
                     if (hostNode.getValue() > t1.getValue()) {
@@ -86,9 +97,5 @@ public class Hosts {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        Hosts hosts = new Hosts("insight_testsuite/tests/test_features/log_input/log.txt", 10);
     }
 }

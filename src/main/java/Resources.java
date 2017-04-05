@@ -101,10 +101,5 @@ public class Resources {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public static void main(String[] args) {
-        Resources resources = new Resources("insight_testsuite/tests/test_features/log_input/log.txt", 10);
     }
 }

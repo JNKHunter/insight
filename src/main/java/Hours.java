@@ -98,8 +98,4 @@ public class Hours {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        Hours hours = new Hours("insight_testsuite/tests/test_features/log_input/log.txt", 10);
-    }
 }

@@ -79,8 +79,4 @@ public class Blocked {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        Blocked blocked = new Blocked("insight_testsuite/tests/test_features/log_input/log.txt");
-    }
 }
