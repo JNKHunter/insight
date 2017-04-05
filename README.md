@@ -12,8 +12,7 @@ priority queue to store  the top X hosts. By peeking at the root of the pq, we k
 requesting hosts so far. If we find a larger host request value than the current minimum of the top 10 requesting hosts,
 we remove the root of the pq, and add the new host and value to the pq.
 
-##### :fire: Bonus top hosts feature!
-Return any number of top hosts (not only the top 10). The add() method in a pq is an O(log(n)) operation, and peek()/remove() is
+* :fire: ** Bonus top hosts feature!** Return any number of top hosts (not only the top 10). The add() method in a pq is an O(log(n)) operation, and peek()/remove() is
 an 0(log(1)) operation. This gives us the ability to scale our solution to return the top million or even billion resources,
 with only a log(n) negative effect on time performance. In the constructor, just pass the number of top X hosts you'd
 like returned.
