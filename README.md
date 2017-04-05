@@ -12,9 +12,9 @@ priority queue to store  the top X hosts. By peeking at the root of the pq, we k
 requesting hosts so far. If we find a larger host request value than the current minimum of the top 10 requesting hosts,
 we remove the root of the pq, and add the new host and value to the pq.
 ##### :fire: Bonus top hosts feature!
-add() in a pq is an O(log(n)) operation, and peek()/remove() is an 0(log(1)) operation. This will give us the ability
-to scale our solution to return the top million or even billion resources, with only a log(n) negative effect
-on time performance.
+Return any number of top hosts (not only the top 10). Because add() in a pq is an O(log(n)) operation, and peek()/remove() is
+an 0(log(1)) operation we have the ability to scale our solution to return the top million or even billion resources,
+with only a log(n) negative effect on time performance.
 
 ### Resources.java
 * Similar to Hosts.java, we parse out each resource from log entries and store them in a hashmap.
@@ -24,9 +24,9 @@ priority queue to store  the top X requests. By peeking at the root of the pq, w
 resource paths so far. If we find a larger request value than the current minimum of the top 10 requested resources,
 we remove the root of the pq, and add the new resource and value to the pq.
 ##### :fire: Bonus top resources feature!
-Just like in Hosts.java, add() in a pq is an O(log(n)) operation, and peek()/remove() is an 0(log(1)) operation.
-This will give us the ability to scale our solution to return the top million or even billion resources, with only a
-log(n) negative effect on time performance.
+Just like in Hosts.java, return any number of top resources (not only the top 10). Because add() in a pq is an O(log(n))
+operation, and peek()/remove() is an 0(log(1)) operation we have the ability to scale our solution to return the top
+million or even billion resources, with only a log(n) negative effect on time performance.
 
 
 First we parse in N lines contained in the file one line at a time, collecting hosts/ip names into a hashmap.
