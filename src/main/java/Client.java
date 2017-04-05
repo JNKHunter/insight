@@ -12,7 +12,7 @@ public class Client {
         String fileString = "insight_testsuite/tests/test_features/log_input/log.txt";
 
         Hosts hosts = new Hosts(10);
-        Resources resources = new Resources("insight_testsuite/tests/test_features/log_input/log.txt", 10);
+        Resources resources = new Resources(10);
         Hours hours = new Hours("insight_testsuite/tests/test_features/log_input/log.txt", 10);
         Blocked blocked = new Blocked("insight_testsuite/tests/test_features/log_input/log.txt");
 
@@ -22,6 +22,7 @@ public class Client {
 
             while ((line = br.readLine()) != null) {
                 hosts.processNextLine(line);
+                resources.processNextLine(line);
             }
 
         } catch (IOException e) {
@@ -29,5 +30,6 @@ public class Client {
         }
 
         hosts.outputResults("log_output/hosts.txt");
+        resources.outputResults("log_output/resources.txt");
     }
 }

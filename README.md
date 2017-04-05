@@ -12,3 +12,8 @@
  * to scale our solution to the top million or even billion requesting hosts, with only a log(n)
  * negative effect time performance.
  */
+ 
+ 
+ 
+Extra features, pass in the number of top X items you'd like to see into the constructor of Hosts, Resources, or HOurs.
+You will get that many results back with only a log(n) increase in time execution!  
