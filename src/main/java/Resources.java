@@ -24,13 +24,13 @@ public class Resources {
     private Queue<ResourceNode> resourceQueue;
     private int topX;
     private String logPattern;
-    private Pattern p;
+    private Pattern pattern;
     Matcher matcher;
 
     public Resources(int topX) {
         this.topX = topX;
         logPattern = "[\\w.]+ - - \\[[/\\w\\S\\s]+] \"\\w+ ([/\\w\\S]+)[\\w\\S\\s]*\" [0-9]+ ([0-9\\-]+)";
-        p = Pattern.compile(logPattern);
+        pattern = Pattern.compile(logPattern);
 
         resourceMap = new HashMap<>();
         resourceQueue = new PriorityQueue<>(new Comparator<ResourceNode>() {
@@ -50,7 +50,7 @@ public class Resources {
 
     public void processNextLine(String line) {
         long bytes = 0;
-        matcher = p.matcher(line);
+        matcher = pattern.matcher(line);
 
         if (matcher.find()){
 
