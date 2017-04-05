@@ -9,7 +9,8 @@ public class Client {
 
     public static void main(String[] args) throws IOException {
 
-        String fileString = "insight_testsuite/tests/test_features/log_input/log.txt";
+        if (args.length != 5) throw new IllegalArgumentException("Incorrect number of arguments passed into program");
+        String fileString = args[0];
 
         Hosts hosts = new Hosts(10);
         Resources resources = new Resources(10);
@@ -30,9 +31,9 @@ public class Client {
             e.printStackTrace();
         }
 
-        hosts.outputResults("log_output/hosts.txt");
-        resources.outputResults("log_output/resources.txt");
-        hours.outputResults("log_output/hours.txt");
-        blocked.outputResults("log_output/blocked.txt");
+        hosts.outputResults(args[1]);
+        resources.outputResults(args[2]);
+        hours.outputResults(args[3]);
+        blocked.outputResults(args[4]);
     }
 }

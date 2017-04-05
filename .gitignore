@@ -85,3 +85,5 @@ hs_err_pid*
 
 # Project specific
 /log_input/log.txt
+/log_output/*
+bin/*
