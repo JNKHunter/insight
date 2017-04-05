@@ -30,14 +30,14 @@ public class Blocked {
             while ((line = br.readLine()) != null) {
                 matcher = p.matcher(line);
 
-                // TODO: Determine if a request is blocked. We will need to write separate logic for that
                 if (matcher.find()) {
 
                     if (failedLogins.containsKey(matcher.group(1))) {
 
                         if (matcher.group(3).equals(FAILED_LOGIN_CODE)) {
-                            failedLogins.get(matcher.group(1)).logFailedAttempt(LocalDateTime.parse(matcher.group(2), formatter));
-                        } else if (failedLogins.get(matcher.group(1)).isBlocked()) {
+                            failedLogins.get(matcher.group(1))
+                                    .logFailedAttempt(LocalDateTime.parse(matcher.group(2), formatter));
+                        } else {
                             failedLogins.get(matcher.group(1)).addPossibleBlockedRequest(matcher.group(0),
                                     LocalDateTime.parse(matcher.group(2), formatter));
                         }
@@ -50,5 +50,9 @@ public class Blocked {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        Blocked blocked = new Blocked("insight_testsuite/tests/log_input/log.txt");
     }
 }
