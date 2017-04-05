@@ -5,7 +5,7 @@
 * Once each line is processed, we output each report by calling outputResults() on each feature object.
 
 ### Hosts.java
-* Parses each host out from log entries and stores them in a hashmap.
+* Parses each host out from log entries and stores them in a hashmap. This makes lookups by Host/IP a log(n) operation.
 * The hashmap uses the host (ip or hostname) as the key, and number of occurrences as the value.
 * We want to avoid sorting a large number of hosts by number of occurrences, so when we're ready to output, we create a
 priority queue to store  the top X hosts. By peeking at the root of the pq, we know the minimum of the top 10
@@ -19,7 +19,8 @@ with only a log(n) negative effect on time performance. In the constructor, just
 like returned.
 
 ### Resources.java
-* Similar to Hosts.java, we parse out each resource from log entries and store them in a hashmap.
+* Similar to Hosts.java, we parse out each resource from log entries and store them in a hashmap. This makes lookups
+by resource a log(n) operation.
 * The hashmap uses the resource path as the key, and number of occurrences as the value.
 * We want to avoid sorting a large number of resources by number of requests, so when we're ready to output, we create a
 priority queue to store  the top X requests. By peeking at the root of the pq, we know the minimum of the top 10
@@ -41,9 +42,3 @@ Yet another solution would be to test every hour on the hour.
 ##### :fire: Bonus top hours feature!
 Just like in Hosts.java, return any number of top traffic hours (not only the top 10). This feature is extremely time
 efficient for the reasons explained under Hosts.java.
-
-* The hashmap uses the host (ip or hostname) as the key, and number of occurrences as the value.
-* We want to avoid sorting a large number of hosts by number of occurrences, so when we're ready to output, we create a
-priority queue to store  the top X hosts. By peeking at the root of the pq, we know the minimum of the top 10
-requesting hosts so far. If we find a larger host request value than the current minimum of the top 10 requesting hosts,
-we remove the root of the pq, and add the new host and value to the pq.
