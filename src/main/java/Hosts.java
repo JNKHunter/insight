@@ -1,7 +1,8 @@
 import java.io.*;
 import java.util.*;
 
-/**
+/*
+*
  * Created by jhunter on 3/31/17.
  * First we parse in N lines contained in the file one line at a time, collecting hosts/ip names into a hashmap.
  *
@@ -14,7 +15,7 @@ import java.util.*;
  * add() in a pq is an O(log(n)) operation, and peek()/remove() is an 0(log(1)) operation. This will give us the ability
  * to scale our solution to the top million or even billion requesting hosts, with only a log(n)
  * negative effect time performance.
- */
+*/
 public class Hosts {
 
     public Hosts(String fileString, int topX) {
