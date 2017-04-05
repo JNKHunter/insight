@@ -60,7 +60,6 @@ public class Blocked {
                     }
                 }
             }
-            int i = 0;
         } catch (IOException e) {
             e.printStackTrace();
         }
