@@ -41,7 +41,7 @@ we remove the root of the pq, and add the new resource and value to the pq.
 * :fire:**Bonus top hours feature!**:fire: Just like in Hosts.java, return any number of top traffic hours
 (not only the top 10). This feature is extremely time efficient for the reasons explained under Hosts.java.
 
-#### Blocked.java
+### Blocked.java
 * Parses each failed request out from log entries and stores them in a hashmap. This makes lookups by Host/IP a
 log(n) operation.
 * The hashmap uses the host (ip or hostname) as the key, and a ResourceNode as the value. A ResourceNode is largely
@@ -50,7 +50,7 @@ malicious.
 * In particular, we're using a LinkedHashmap to preserve the insertion order of the failed logins, and get a faster
 iteration speed when we're writing out to a file.
 
-#### Run time performance and notes :rocket:
+### Run time performance and notes :rocket:
 * ~2 min to completely process and create reports from 4.4mm logs on a 2013 MacBook Pro.
 * ~2 min to completely process and create reports from 4.4mm logs on a 2016 Dell XSP laptop running Ubuntu 16.04
 
