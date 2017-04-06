@@ -27,11 +27,20 @@ public class Hours {
         datesQueue = new PriorityQueue<>(new Comparator<HoursNode>() {
             @Override
             public int compare(HoursNode hoursNode, HoursNode t1) {
-                if (hoursNode.getNumEvents() >= t1.getNumEvents() && hoursNode.getTime().isBefore(t1.getTime())) {
+
+                if (hoursNode.getNumEvents() == t1.getNumEvents()) {
+                    if (hoursNode.getTime().isBefore(t1.getTime())) {
+                        return 1;
+                    } else if (hoursNode.getTime().isAfter(t1.getTime())) {
+                        return -1;
+                    }
+                }
+
+                if (hoursNode.getNumEvents() > t1.getNumEvents()) {
                     return 1;
                 }
 
-                if (hoursNode.getNumEvents() <= t1.getNumEvents() && hoursNode.getTime().isAfter(t1.getTime())) {
+                if (hoursNode.getNumEvents() < t1.getNumEvents()) {
                     return -1;
                 }
 
