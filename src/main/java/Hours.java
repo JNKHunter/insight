@@ -27,11 +27,11 @@ public class Hours {
         datesQueue = new PriorityQueue<>(new Comparator<HoursNode>() {
             @Override
             public int compare(HoursNode hoursNode, HoursNode t1) {
-                if (hoursNode.getNumEvents() > t1.getNumEvents()) {
+                if (hoursNode.getNumEvents() >= t1.getNumEvents() && hoursNode.getTime().isBefore(t1.getTime())) {
                     return 1;
                 }
 
-                if (hoursNode.getNumEvents() < t1.getNumEvents()) {
+                if (hoursNode.getNumEvents() <= t1.getNumEvents() && hoursNode.getTime().isAfter(t1.getTime())) {
                     return -1;
                 }
 
@@ -51,18 +51,40 @@ public class Hours {
     public void outputResults(String outputFile) throws IOException {
 
         //The array is already sorted by time ascending.
-        int rightPointer = 1;
-        LocalDateTime oneHourFromNow;
-        //Used to skip to the next second to keep the data a little more useful and insightful
-        for (int i = 0; i < dates.size(); i++) {
+        int leftPointer = 0;
+        int rightPointer;
+        int eventsFound;
+        LocalDateTime secondsPointer = dates.get(0);
+        LocalDateTime oneHourFromSecondsPointer = dates.get(0).plusHours(1);
+        LocalDateTime endTimePointer = dates.get(dates.size() - 1);
 
-            oneHourFromNow = dates.get(i).plusHours(1);
 
-            while(dates.get(rightPointer).isBefore(oneHourFromNow) && rightPointer < (dates.size() - 1)){
-                rightPointer += 1;
+        while(secondsPointer.isBefore(endTimePointer)) {
+
+            /**
+             * Find the next matching event
+             * We could use a binary search here to save a few lookups, but keeping track of the left pointer
+             * gets us pretty close.
+             **/
+            for(int i = leftPointer; i < dates.size(); i++) {
+                leftPointer = i;
+                if(dates.get(i).isAfter(secondsPointer) || dates.get(i).isEqual(secondsPointer)) break;
             }
 
-            HoursNode newNode = new HoursNode(dates.get(i), (rightPointer - i) + 1);
+            rightPointer = leftPointer;
+            eventsFound = 0;
+
+            //Start counting events.
+            while (rightPointer < dates.size()) {
+                if(dates.get(rightPointer).isBefore(oneHourFromSecondsPointer)) {
+                    eventsFound += 1;
+                    rightPointer += 1;
+                } else {
+                    break;
+                }
+            }
+
+            HoursNode newNode = new HoursNode(secondsPointer, eventsFound);
 
             if(datesQueue.size() < topX){
                 datesQueue.add(newNode);
@@ -72,6 +94,9 @@ public class Hours {
                     datesQueue.add(newNode);
                 }
             }
+
+            secondsPointer = secondsPointer.plusSeconds(1);
+            oneHourFromSecondsPointer = secondsPointer.plusHours(1);
         }
 
         StringBuilder fileStringBuilder = new StringBuilder();

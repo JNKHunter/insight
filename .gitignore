@@ -87,3 +87,4 @@ hs_err_pid*
 log_input/log.txt
 log_output/*
 bin/*
+temp
