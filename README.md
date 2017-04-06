@@ -3,7 +3,7 @@
 * The project can also be run by running `./run_tests.sh` from /insite_testsuite
 
 ### Client.java
-* Instantiates all of the feature classes 
+* Kicks off the process and instantiates all of the feature classes 
 * Loads the log file and parses it one line at a time
 * Each line is passed into each feature class for processing
 * Once each line is processed, we output each report by calling outputResults() on each feature object.
@@ -50,7 +50,7 @@ malicious.
 * In particular, we're using a LinkedHashmap to preserve the insertion order of the failed logins, and get a faster
 iteration speed when we're writing out to a file.
 
-#### Run time performance and notes
+#### Run time performance and notes :rocket:
 * ~2 min to completely process and create reports from 4.4mm logs on a 2013 MacBook Pro.
 * ~2 min to completely process and create reports from 4.4mm logs on a 2016 Dell XSP laptop running Ubuntu 16.04
 
