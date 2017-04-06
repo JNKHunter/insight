@@ -9,7 +9,7 @@ public class Client {
 
     public static void main(String[] args) throws IOException {
 
-        if (args.length != 5) throw new IllegalArgumentException("Incorrect number of arguments passed into program");
+        if (args.length != 5) throw new IllegalArgumentException("Incorrect number of arguments passed into main");
         String fileString = args[0];
 
         Hosts hosts = new Hosts(10);

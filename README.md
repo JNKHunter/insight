@@ -1,3 +1,7 @@
+## Running the project
+* The project can be run from the root directory with `./run.sh`. This will use the ~1k line log file in /log_input
+* The project can also be run by running `./run_tests.sh` from /insite_testsuite
+
 ### Client.java
 * Instantiates all of the feature classes 
 * Loads the log file and parses it one line at a time
