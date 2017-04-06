@@ -3,9 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockedNode {
-    public static int MAX_ATTEMPTS = 3;
-    public static int ATTEMPTS_SECONDS_WINDOW = 20;
-    public static int BLOCKED_MINUTES_WINDOW = 5;
+    private static final int MAX_ATTEMPTS = 3;
+    private static final int ATTEMPTS_SECONDS_WINDOW = 20;
+    private static final int BLOCKED_MINUTES_WINDOW = 5;
 
     private String host;
     private List<String> blockedRequests;
@@ -19,8 +19,8 @@ public class BlockedNode {
     }
 
     public boolean isRequestBlocked(LocalDateTime requestTime) {
-        if(loginFails.size() >= MAX_ATTEMPTS) {
-            //check 3 most recent loginFails to see if they are within 20 seconds of each other
+        if (loginFails.size() >= MAX_ATTEMPTS) {
+            // check 3 most recent loginFails to see if they are within 20 seconds of each other
             LocalDateTime maxAttemptsExpiry = loginFails.get(loginFails.size() - MAX_ATTEMPTS)
                     .plusSeconds(ATTEMPTS_SECONDS_WINDOW);
 
@@ -52,9 +52,5 @@ public class BlockedNode {
             return true;
         }
         return false;
-    }
-
-    public void setMostRecentLoginFail(LocalDateTime loginFail) {
-
     }
 }

@@ -27,9 +27,9 @@ public class Blocked {
     public void outputResults(String outputFile) throws IOException {
         StringBuilder fileStringBuilder = new StringBuilder();
 
-        failedLogins.forEach((k,v) -> {
+        failedLogins.forEach((k, v) -> {
 
-            if(v.getBlockedRequests().size() > 0){
+            if (v.getBlockedRequests().size() > 0) {
                 StringBuilder lineStringBuilder = new StringBuilder();
                 v.getBlockedRequests().forEach((request) -> {
                     lineStringBuilder.append(request);
@@ -58,8 +58,8 @@ public class Blocked {
                             .logFailedAttempt(LocalDateTime.parse(matcher.group(2), formatter));
 
                 } else if (matcher.group(4).equals(SUCCESS_LOGIN_CODE) && matcher.group(3).equals(LOGIN_PATH)) {
-                    if(failedLogins.get(matcher.group(1)).addPossibleBlockedRequest(matcher.group(0),
-                            LocalDateTime.parse(matcher.group(2), formatter))){
+                    if (failedLogins.get(matcher.group(1)).addPossibleBlockedRequest(matcher.group(0),
+                            LocalDateTime.parse(matcher.group(2), formatter))) {
 
                     } else {
                         failedLogins.remove(matcher.group(1));

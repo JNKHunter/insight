@@ -59,7 +59,7 @@ public class Hours {
 
     public void outputResults(String outputFile) throws IOException {
 
-        //The array is already sorted by time ascending.
+        // The array is already sorted by time ascending.
         int leftPointer = 0;
         int rightPointer;
         int eventsFound;
@@ -68,24 +68,24 @@ public class Hours {
         LocalDateTime endTimePointer = dates.get(dates.size() - 1);
 
 
-        while(secondsPointer.isBefore(endTimePointer)) {
+        while (secondsPointer.isBefore(endTimePointer)) {
 
             /**
              * Find the next matching event
              * We could use a binary search here to save a few lookups, but keeping track of the left pointer
-             * gets us pretty close.
+             * gets us close enough and saves us the complexity of implementing a Binary Search.
              **/
-            for(int i = leftPointer; i < dates.size(); i++) {
+            for (int i = leftPointer; i < dates.size(); i++) {
                 leftPointer = i;
-                if(dates.get(i).isAfter(secondsPointer) || dates.get(i).isEqual(secondsPointer)) break;
+                if (dates.get(i).isAfter(secondsPointer) || dates.get(i).isEqual(secondsPointer)) break;
             }
 
             rightPointer = leftPointer;
             eventsFound = 0;
 
-            //Start counting events.
+            // Start counting events.
             while (rightPointer < dates.size()) {
-                if(dates.get(rightPointer).isBefore(oneHourFromSecondsPointer)) {
+                if (dates.get(rightPointer).isBefore(oneHourFromSecondsPointer)) {
                     eventsFound += 1;
                     rightPointer += 1;
                 } else {
@@ -95,10 +95,10 @@ public class Hours {
 
             HoursNode newNode = new HoursNode(secondsPointer, eventsFound);
 
-            if(datesQueue.size() < topX){
+            if (datesQueue.size() < topX) {
                 datesQueue.add(newNode);
-            }else{
-                if(datesQueue.peek().getNumEvents() < newNode.getNumEvents()) {
+            } else {
+                if (datesQueue.peek().getNumEvents() < newNode.getNumEvents()) {
                     datesQueue.remove();
                     datesQueue.add(newNode);
                 }

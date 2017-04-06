@@ -10,7 +10,7 @@ public class Resources {
     private int topX;
     private String logPattern;
     private Pattern pattern;
-    Matcher matcher;
+    private Matcher matcher;
 
     public Resources(int topX) {
         this.topX = topX;
@@ -37,9 +37,9 @@ public class Resources {
         long bytes = 0;
         matcher = pattern.matcher(line);
 
-        if (matcher.find()){
+        if (matcher.find()) {
 
-            if(!matcher.group(2).equals("-")) {
+            if (!matcher.group(2).equals("-")) {
                 bytes = Long.parseLong(matcher.group(2));
             } else {
                 bytes = 0;
