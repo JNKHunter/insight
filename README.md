@@ -5,16 +5,16 @@
 * Once each line is processed, we output each report by calling outputResults() on each feature object.
 
 ### Hosts.java
-* Parses each host out from log entries and stores them in a hashmap. This makes lookups by Host/IP a log(n) operation.
+* Parses hosts out from log entries and stores each host in a Hashmap. A Hashmap allows for log(n) by Host/IP a log(n).
 * The hashmap uses the host (ip or hostname) as the key, and number of occurrences as the value.
-* We want to avoid sorting a large number of hosts by number of occurrences, so when we're ready to output, we create a
-priority queue to store  the top X hosts. By peeking at the root of the pq, we know the minimum of the top 10
+* We want to avoid sorting a large number of hosts by number of requests, so when we're ready to output, we create a
+priority queue to store the top X hosts. By peeking at the root of the pq, we know the minimum of the top 10
 requesting hosts so far. If we find a larger host request value than the current minimum of the top 10 requesting hosts,
 we remove the root of the pq, and add the new host and value to the pq.
 * :fire:**Bonus top hosts feature!**:fire: Return any number of top hosts (not only the top 10). The add() method in a
 pq is an O(log(n)) operation, and peek()/remove() is an O(1) operation. This gives us the ability to scale our
-solution to return the top million or even billion resources, with only a log(n) negative effect on time performance.
-In the constructor, just pass the number of top X hosts you'd like returned.
+solution to return the top million or even billion resources, with only a n + log(n) negative effect on time performance.
+In the Hosts() constructor, just pass the number of top X hosts you'd like returned.
 
 ### Resources.java
 * Similar to Hosts.java, we parse out each resource from log entries and store them in a hashmap. This makes lookups
@@ -32,10 +32,7 @@ we remove the root of the pq, and add the new resource and value to the pq.
 ### Hours.java
 * Parses each host out from log entries and stores them as HourNodes in an array list.
 * The list is already sorted by date, which is exactly what we need to process the list quickly.
-* One solution would be to check each second between the first date in the list, and the last date in the list, and
-base our hours on that. For this exercise, to make the resulting data a little more interesting I've elected to use
-each event as the start of the next hour we test. This way we won't drop any events by testing say every 5 minutes.
-Yet another solution would be to test every hour on the hour.
+* We then check second by second over the course of the dataset and store the top 10 traffic hours in a priority queue.
 
 * :fire:**Bonus top hours feature!**:fire: Just like in Hosts.java, return any number of top traffic hours
 (not only the top 10). This feature is extremely time efficient for the reasons explained under Hosts.java.
@@ -46,3 +43,7 @@ log(n) operation.
 * The hashmap uses the host (ip or hostname) as the key, and a ResourceNode as the value. A ResourceNode is largely
 responsible to tracking the number of failed login requests and determining if a request should be logged as potentially
 malicious.
+* In particular, we're using a LinkedHashmap to preserve the insertion order of the failed logins, and get a faster
+iteration speed when we're writing out to a file.
+
+#### Performance

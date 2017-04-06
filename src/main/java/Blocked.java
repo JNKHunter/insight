@@ -2,6 +2,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,7 +21,7 @@ public class Blocked {
     public Blocked() {
         logPattern = "([\\w.]+) - - \\[([/\\w\\S\\s]+) -[0-9]+] \"\\w+ ([/\\w\\S]+)[\\w\\S\\s]*\" ([0-9]+) [0-9\\-]+";
         pattern = Pattern.compile(logPattern);
-        failedLogins = new HashMap<>();
+        failedLogins = new LinkedHashMap<>();
         formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ss");
     }
 
