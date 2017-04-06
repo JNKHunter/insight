@@ -46,6 +46,8 @@ malicious.
 * In particular, we're using a LinkedHashmap to preserve the insertion order of the failed logins, and get a faster
 iteration speed when we're writing out to a file.
 
-#### Run time performance
+#### Run time performance and notes
 * ~2 min to completely process and create reports from 4.4mm logs on a 2013 MacBook Pro.
 * ~2 min to completely process and create reports from 4.4mm logs on a 2016 Dell XSP laptop running Ubuntu 16.04
+
+We could get an increase in performance out if we run each feature concurrently. 
