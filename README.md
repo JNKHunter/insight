@@ -1,6 +1,7 @@
 ## Running the project
-* The project can be run from the root directory with `./run.sh`. This will use the ~1k line log file in /log_input
-* The project can also be run by running `./run_tests.sh` from /insite_testsuite
+* The project can be run from the root directory with `./run.sh`. This will use the ~1k line log file in /log_input.
+* The tests can be run by running `./run_tests.sh` from /insite_testsuite.
+* This project requires Java 8, and there are no 3rd party libraries used.
 
 ### Client.java
 * Kicks off the process and instantiates all of the feature classes 
